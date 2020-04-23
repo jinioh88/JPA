@@ -17,6 +17,7 @@ public class MemberRepository {
 
     public void save(Member member) {
         em.persist(member); // 영속성 컨텍스트에 올림. 키가 id 값이 됨.
+        // GenerateValue 전략에서는 persist해도 insert가 안날아간다. transaction이 commit이 될때 fllush 되면서 insert가 날아간다.
     }
 
     public Member findOne(Long id) {
