@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,4 +32,18 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();
+
+    // 데이터를 가지고 있는쪽에 로직이 있으면 일일히 setXXX를 안해줘도 된다.
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        int resultStock = this.stockQuantity - quantity;
+        if(resultStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+
+        this.stockQuantity = resultStock;
+    }
 }
