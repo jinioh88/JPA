@@ -50,7 +50,7 @@ public class Order {
 
     // 양방향 연관관계 메서드
     // 이 메서드 위치는 컨트롤 하는쪽이 들고있는게 좋듬
-    public void setMember(Member memeber) {
+    public void setMember(Member member) {
         this.member = member;
         member.getOrders().add(this);
     }
