@@ -4,6 +4,8 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.UserDTO;
 import study.datajpa.repository.MemberRepository;
@@ -105,5 +107,24 @@ public class MemberRepositoryTest {
         List<Member> findMembers = memberRepository.findByUserNames(Lists.newArrayList("jinioh88", "jinioh22"));
 
         assertThat(findMembers.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void test_page() {
+        memberRepository.save(new Member("a", 20));
+        memberRepository.save(new Member("b", 20));
+        memberRepository.save(new Member("c", 20));
+        memberRepository.save(new Member("d", 20));
+        memberRepository.save(new Member("e", 20));
+
+        PageRequest pageRequest = PageRequest.of(0, 3);
+
+        Page<Member> members = memberRepository.findByAge(20, pageRequest);
+
+        assertThat(members.getTotalElements()).isEqualTo(5);
+        assertThat(members.getContent().size()).isEqualTo(3);
+        assertThat(members.getTotalPages()).isEqualTo(2);
+        assertThat(members.isFirst()).isTrue();
+        assertThat(members.isLast()).isFalse();
     }
 }
