@@ -127,4 +127,18 @@ public class MemberRepositoryTest {
         assertThat(members.isFirst()).isTrue();
         assertThat(members.isLast()).isFalse();
     }
+
+    @Test
+    public void test_bulk() {
+        memberRepository.save(new Member("a", 19));
+        memberRepository.save(new Member("b", 18));
+        memberRepository.save(new Member("c", 20));
+        memberRepository.save(new Member("d", 21));
+        memberRepository.save(new Member("e", 30));
+        int expectedSize = 3;
+
+        int result = memberRepository.bulkAgePlus(20);
+
+        assertThat(result).isEqualTo(expectedSize);
+    }
 }
