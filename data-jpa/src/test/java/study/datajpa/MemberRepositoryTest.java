@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.UserDTO;
+import study.datajpa.entity.Member;
+import study.datajpa.entity.Team;
 import study.datajpa.repository.MemberRepository;
 import study.datajpa.repository.TeamRepository;
 
