@@ -5,31 +5,16 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-//@ToString(exclude = {""})
-@Setter @Getter
 @Table(name = "S_EMP")
-@Access(AccessType.FIELD)
+@TableGenerator(name = "SEQ_GENERATOR", table = "SHOPPING_SEQUENCES",
+pkColumnName = "SEQ_NAME", pkColumnValue = "EMP_SEQ", valueColumnName = "NEXT_VALUE",
+initialValue = 0, allocationSize = 1)
 public class Employee {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.TABLE, generator = "SEQ_GENERATOR")
     private Long id;
 
     private String name;
-    private String mailId;
-
-    @Column(name = "START_DATE")
-    private Date startDate;
-
-    private String title;
-
-    @Column(name = "DEPT_NAME")
-    private String deptName;
-
-    private Double salary;
-
-    @Column(name = "COMMISSION_PCT")
-    private Double commissionPct;
 }

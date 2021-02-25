@@ -18,7 +18,7 @@ public class EmplyeeServiceClient {
 
         try {
             Employee employee = new Employee();
-            employee.setId(1L);
+//            employee.setId(1L);
             employee.setName("둘리");
 
             tx.begin();
