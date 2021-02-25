@@ -1,6 +1,7 @@
 package com.sutdy.jpa.biz.client;
 
 import com.sutdy.jpa.biz.domain.Employee;
+import com.sutdy.jpa.biz.domain.EmployeeId;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,16 +18,14 @@ public class EmplyeeServiceClient {
         EntityTransaction tx = em.getTransaction();
 
         try {
-            Employee employee = new Employee();
-//            employee.setId(1L);
-            employee.setName("둘리");
-
             tx.begin();
 
-            em.persist(employee);
-            tx.commit();
+            EmployeeId empId = new EmployeeId(1L, "guest123");
 
-            Employee founded = em.find(Employee.class, 1L);
+            Employee employee = em.find(Employee.class, empId);
+            System.out.println("founded: " + employee.toString());
+
+            tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();

@@ -8,8 +8,7 @@ import javax.persistence.*;
 @Table(name = "S_EMP")
 public class Employee {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    @Id
+    private EmployeeId empId;
     private String name;
 }
