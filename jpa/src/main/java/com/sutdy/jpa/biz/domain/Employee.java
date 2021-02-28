@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "S_EMP")
 public class Employee {
 
-    @Id
-    private EmployeeId empId;
+    @Id @GeneratedValue
+    private Long id;
     private String name;
 }

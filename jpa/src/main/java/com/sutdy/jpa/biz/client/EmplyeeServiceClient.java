@@ -3,10 +3,7 @@ package com.sutdy.jpa.biz.client;
 import com.sutdy.jpa.biz.domain.Employee;
 import com.sutdy.jpa.biz.domain.EmployeeId;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 public class EmplyeeServiceClient {
 
@@ -14,18 +11,19 @@ public class EmplyeeServiceClient {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter02");
 
         EntityManager em = emf.createEntityManager();
+        em.setFlushMode(FlushModeType.COMMIT);
 
         EntityTransaction tx = em.getTransaction();
 
         try {
+            Employee employee = new Employee();
+            employee.setName("둘리");
             tx.begin();
-
-            EmployeeId empId = new EmployeeId(1L, "guest123");
-
-            Employee employee = em.find(Employee.class, empId);
-            System.out.println("founded: " + employee.toString());
-
+            em.persist(employee);
             tx.commit();
+
+            Employee findEmp1 = em.find(Employee.class, 1L);
+            Employee findEmp2 = em.find(Employee.class, 1L);
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
