@@ -17,13 +17,12 @@ public class EmplyeeServiceClient {
 
         try {
             Employee employee = new Employee();
-            employee.setName("둘리");
-            tx.begin();
-            em.persist(employee);
-            tx.commit();
+            employee.setName("둘리 수정함");
+            employee.setId(1L);
 
-            Employee findEmp1 = em.find(Employee.class, 1L);
-            Employee findEmp2 = em.find(Employee.class, 1L);
+            tx.begin();
+            em.merge(employee);
+            tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
