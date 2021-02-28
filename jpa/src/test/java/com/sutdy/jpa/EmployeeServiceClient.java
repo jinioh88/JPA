@@ -1,4 +1,7 @@
-package com.sutdy.jpa.hibernate;
+package com.sutdy.jpa;
+
+import com.sutdy.jpa.hibernate.EmployeeDAO;
+import com.sutdy.jpa.hibernate.EmployeeVO;
 
 import java.sql.Timestamp;
 import java.util.List;
