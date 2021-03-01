@@ -38,6 +38,25 @@ public class EmplyeeServiceClient {
         }
     }
 
+    private void dataDelete(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Department department = em.find(Department.class, 1L);
+
+        // 직원의 부서 정보 수정
+        List<Employee> employees = department.getEmployees();
+        for (Employee employee : employees) {
+            employee.standby();
+        }
+
+        // 부서 삭제
+        em.remove(department);
+
+        em.getTransaction().commit();
+        em.close();
+    }
+
     private void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
         Department department = em.find(Department.class, 1L);
@@ -54,20 +73,16 @@ public class EmplyeeServiceClient {
 
         Department department = new Department();
         department.setName("개발부");
-        em.persist(department);
 
         Employee employee1 = new Employee();
         employee1.setName("둘리");
         employee1.setDept(department);
-        em.persist(employee1);
 
         Employee employee2 = new Employee();
         employee1.setName("또치");
         employee2.setDept(department);
-        em.persist(employee2);
 
-//        department.getEmployees().add(employee1);
-//        department.getEmployees().add(employee2);
+        em.persist(department);
 
         System.out.println(department.getName() + "의 직원 수: " + department.getEmployees().size());
 

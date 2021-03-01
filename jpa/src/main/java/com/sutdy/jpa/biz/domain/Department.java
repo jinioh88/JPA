@@ -22,6 +22,6 @@ public class Department {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "dept")
-    private Set<Employee> employees = new HashSet<>();
+    @OneToMany(mappedBy = "dept", cascade = {CascadeType.PERSIST})
+    private List<Employee> employees = new ArrayList<>();
 }
