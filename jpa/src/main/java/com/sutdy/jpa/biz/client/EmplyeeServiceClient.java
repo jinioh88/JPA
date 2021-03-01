@@ -47,4 +47,31 @@ public class EmplyeeServiceClient {
             System.out.println(employee.getName());
         }
     }
+
+    private void dataInsert(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Department department = new Department();
+        department.setName("개발부");
+        em.persist(department);
+
+        Employee employee1 = new Employee();
+        employee1.setName("둘리");
+        employee1.setDept(department);
+        em.persist(employee1);
+
+        Employee employee2 = new Employee();
+        employee1.setName("또치");
+        employee2.setDept(department);
+        em.persist(employee2);
+
+//        department.getEmployees().add(employee1);
+//        department.getEmployees().add(employee2);
+
+        System.out.println(department.getName() + "의 직원 수: " + department.getEmployees().size());
+
+        em.getTransaction().commit();
+        em.close();
+    }
 }
