@@ -40,7 +40,11 @@ public class EmplyeeServiceClient {
 
     private void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
-        Employee employee = em.find(Employee.class, 2L);
-        System.out.println(employee.getName() + " " + employee.getDept().getName());
+        Department department = em.find(Department.class, 1L);
+
+        System.out.println("검색된 부서: " + department.getName());
+        for (Employee employee : department.getEmployees()) {
+            System.out.println(employee.getName());
+        }
     }
 }
