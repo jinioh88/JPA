@@ -1,5 +1,6 @@
 package com.sutdy.jpa.biz.client;
 
+import com.sutdy.jpa.biz.domain.Department;
 import com.sutdy.jpa.biz.domain.Employee;
 import com.sutdy.jpa.biz.domain.EmployeeId;
 
@@ -12,24 +13,22 @@ public class EmplyeeServiceClient {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter02");
 
         EntityManager em = emf.createEntityManager();
-        em.setFlushMode(FlushModeType.COMMIT);
 
         EntityTransaction tx = em.getTransaction();
 
         try {
-            Employee employee = new Employee();
-            employee.setName("둘리 수정함");
-            employee.setId(1L);
-
             tx.begin();
-            em.merge(employee);
+
+            Employee employee1 = em.find(Employee.class, 1L);
+            employee1.setDept(null);
+            Employee employee2 = em.find(Employee.class, 2L);
+            employee1.setDept(null);
+
+            Department department = em.find(Department.class, 1L);
+            em.remove(department);
+
             tx.commit();
-
-            Employee founded = em.getReference(Employee.class, 1L);
-            System.out.println(founded.getName());
-
-            String jpql = "select e from Employee e order by e.id desc";
-            List<Employee> resultList = em.createQuery(jpql, Employee.class).getResultList();
+            em.close();
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
@@ -37,5 +36,11 @@ public class EmplyeeServiceClient {
             em.close();
             emf.close();
         }
+    }
+
+    private void dataSelect(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        Employee employee = em.find(Employee.class, 2L);
+        System.out.println(employee.getName() + " " + employee.getDept().getName());
     }
 }
