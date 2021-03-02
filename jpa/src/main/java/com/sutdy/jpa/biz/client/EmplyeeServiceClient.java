@@ -20,9 +20,7 @@ public class EmplyeeServiceClient {
             tx.begin();
 
             Employee employee1 = em.find(Employee.class, 1L);
-            employee1.setDept(null);
-            Employee employee2 = em.find(Employee.class, 2L);
-            employee1.setDept(null);
+
 
             Department department = em.find(Department.class, 1L);
             em.remove(department);
@@ -47,7 +45,7 @@ public class EmplyeeServiceClient {
         // 직원의 부서 정보 수정
         List<Employee> employees = department.getEmployees();
         for (Employee employee : employees) {
-            employee.standby();
+//            employee.standby();
         }
 
         // 부서 삭제
@@ -76,11 +74,11 @@ public class EmplyeeServiceClient {
 
         Employee employee1 = new Employee();
         employee1.setName("둘리");
-        employee1.setDept(department);
+//        employee1.setDept(department);
 
         Employee employee2 = new Employee();
         employee1.setName("또치");
-        employee2.setDept(department);
+//        employee2.setDept(department);
 
         em.persist(department);
 
