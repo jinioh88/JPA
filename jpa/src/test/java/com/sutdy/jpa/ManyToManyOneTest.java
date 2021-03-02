@@ -33,6 +33,12 @@ public class ManyToManyOneTest {
         for (Product product : products) {
             System.out.println("--->" + product.getName());
         }
+
+        Product product = em.find(Product.class, 1L);
+        List<Order> orders = product.getOrders();
+        for (Order ord: orders) {
+            System.out.println("---> " + ord.toString());
+        }
     }
 
     private static void dataInsert(EntityManagerFactory emf) {

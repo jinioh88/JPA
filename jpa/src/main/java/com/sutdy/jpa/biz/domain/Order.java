@@ -1,6 +1,7 @@
 package com.sutdy.jpa.biz.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@ToString(exclude = "productList")
 @Entity
 @Table(name = "S_ORD")
 public class Order {
@@ -28,4 +30,9 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"ORD_ID", "PRODUCT_ID"}))
     private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getOrders().add(this);
+    }
 }
