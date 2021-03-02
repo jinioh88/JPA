@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -19,7 +20,7 @@ import lombok.ToString;
 @Table(name = "S_EMP_CARD")
 public class EmployeeCard {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "CARD_ID")
     private Long cardId;
 
@@ -28,7 +29,8 @@ public class EmployeeCard {
 
     private String role;
 
-    @OneToOne(mappedBy = "card")
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "EMP_ID")
     private Employee employee;
-
 }

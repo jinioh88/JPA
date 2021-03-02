@@ -29,10 +29,6 @@ public class OneToOneClient {
         EmployeeCard employeeCard = em.find(EmployeeCard.class, 1L);
         System.out.println(employeeCard.getCardId());
         System.out.println(employeeCard.getEmployee().getName());
-
-        Employee employee = em.find(Employee.class, 1L);
-        System.out.println(employee.getName());
-        System.out.println(employee.getCard().getExpireDate());
     }
 
     private static void dataInsert(EntityManagerFactory emf) throws ParseException {
