@@ -15,20 +15,12 @@ public class Employee {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "DEPT_ID")
-    private Department dept;
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "EMP_CARD_ID")
+    private EmployeeCard card;
 
-    public void setDept(Department department) {
-        this.dept = department;
-
-        // Department 엔티티의 컬렉션에도 Employee 참조 하도록
-        department.getEmployees().add(this);
-
-    }
-
-    // 부서 정보를 null로 설정해 직원을 대기 상태로 전환
-    public void standby() {
-        this.dept = null;
+    public void setEmployeeCard(EmployeeCard card) {
+        this.card = card;
+        card.setEmployee(this);
     }
 }
