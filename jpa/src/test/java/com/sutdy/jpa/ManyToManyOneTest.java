@@ -1,5 +1,6 @@
 package com.sutdy.jpa;
 
+import com.sutdy.jpa.biz.domain.Item;
 import com.sutdy.jpa.biz.domain.Order;
 import com.sutdy.jpa.biz.domain.Product;
 import org.mockito.internal.matchers.Or;
@@ -29,15 +30,9 @@ public class ManyToManyOneTest {
 
         Order order = em.find(Order.class, 1L);
 
-        List<Product> products = order.getProducts();
-        for (Product product : products) {
-            System.out.println("--->" + product.getName());
-        }
-
-        Product product = em.find(Product.class, 1L);
-        List<Order> orders = product.getOrders();
-        for (Order ord: orders) {
-            System.out.println("---> " + ord.toString());
+        List<Item> items = order.getItems();
+        for (Item item : items) {
+            System.out.println(item.getProduct().getName());
         }
     }
 
@@ -55,8 +50,21 @@ public class ManyToManyOneTest {
 
         Order order = new Order();
         order.setOrderDate(new Date());
-        order.getProducts().add(product1);
-        order.getProducts().add(product2);
+        em.persist(order);
+
+        Item item1 = new Item();
+        item1.setOrder(order);
+        item1.setProduct(product1);
+        item1.setPrice(100000L);
+        item1.setQuantity(2L);
+        em.persist(item1);
+
+        Item item2 = new Item();
+        item2.setOrder(order);
+        item2.setProduct(product2);
+        item2.setPrice(120000L);
+        item2.setQuantity(3L);
+        em.persist(item2);
 
         em.getTransaction().commit();
         em.close();

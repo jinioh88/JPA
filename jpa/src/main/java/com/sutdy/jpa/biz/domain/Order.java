@@ -25,14 +25,6 @@ public class Order {
 
     private Double total;
 
-    @ManyToMany
-    @JoinTable(name = "S_ITEM", joinColumns = @JoinColumn(name = "ORD_ID"),
-            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"ORD_ID", "PRODUCT_ID"}))
-    private List<Product> products = new ArrayList<>();
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.getOrders().add(this);
-    }
+    @OneToMany(mappedBy = "order")
+    private List<Item> items = new ArrayList<>();
 }

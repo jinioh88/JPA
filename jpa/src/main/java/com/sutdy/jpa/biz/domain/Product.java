@@ -3,8 +3,6 @@ package com.sutdy.jpa.biz.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
@@ -21,6 +19,4 @@ public class Product {
 
     private String category;
 
-    @ManyToMany(mappedBy = "productList")
-    private List<Order> orders = new ArrayList<>();
 }
