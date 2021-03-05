@@ -25,15 +25,11 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "select NEW com.sutdy.jpa.jpql.EmployeeSalaryData( id, salary, commisionPct) from Employee";
+        String jpql = "select e, e.dept from Employee e";
+        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
-        // JPQL 전송
-        TypedQuery<EmployeeSalaryData> query = em.createQuery(jpql, EmployeeSalaryData.class);
+        List<Object[]> resultList = query.getResultList();
 
-        List<EmployeeSalaryData> resultList = query.getResultList();
-        for (EmployeeSalaryData result : resultList) {
-            System.out.println(result.toString());
-        }
 
         em.close();
     }
@@ -43,7 +39,7 @@ public class JPQLBasicClient {
         em.getTransaction().begin();
 
         for (int i = 1; i <= 10; i++) {
-            Employee employee =  new Employee();
+            Employee employee = new Employee();
             employee.setName("직원 " + i);
             employee.setDeptName("개발부");
             em.persist(employee);

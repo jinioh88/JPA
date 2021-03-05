@@ -1,12 +1,8 @@
 package com.sutdy.jpa.jpql;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Data;
 
 @Data
@@ -34,4 +30,15 @@ public class Employee {
 
     @Column(name = "COMMISSION_PCT")
     private Double commissionPct;
+
+    @ManyToOne
+    @JoinColumn(name = "DEPT+ID")
+    private Department dept;
+
+    public void setDept(Department department) {
+        this.dept = department;
+        if (department != null) {
+            department.getEmployeeList().add(this);
+        }
+    }
 }
