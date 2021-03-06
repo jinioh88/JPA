@@ -25,8 +25,13 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "select e, e.dept from Employee e left join fetch e.dept";
+        String jpql = "select e, e.dept from Employee e order by e.id;
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        int pageNumber = 2;
+        int pageSize = 5;
+        int startNum = (pageNumber * pageSize) - pageSize;
+        query.setFirstResult(startNum);
+        query.setMaxResults(pageSize);
 
         List<Object[]> resultList = query.getResultList();
 
