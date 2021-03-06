@@ -8,6 +8,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "S_EMP")
+//@NamedQueries(
+//        @NamedQuery(name = "Emplyee.searchById",
+//                query = "select e from Employee e where e.id = :searchKeyword"),
+//        @NamedQuery(name = "Emplyee.searchByName",
+//                query = "select e from Employee e where e.name like :searchKeyword")
+//)
 public class Employee {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -26,19 +26,16 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "select d from Department d where :employee member of d.employees";
+        String jpql = "select d.name, INDEX(e), e from Department d join d.employees e where INDEX(e) = 2";
         TypedQuery<Department> query = em.createQuery(jpql, Department.class);
-        Employee findEmp = em.find(Employee.class, 6L);
-        query.setParameter("employee", findEmp);
+
+
 
         int pageNumber = 2;
         int pageSize = 5;
         int startNum = (pageNumber * pageSize) - pageSize;
         query.setFirstResult(startNum);
         query.setMaxResults(pageSize);
-
-        List<Object[]> resultList = query.getResultList();
-
 
         em.close();
     }
