@@ -1,5 +1,6 @@
 package com.sutdy.jpa;
 
+import com.sutdy.jpa.jpql.Department;
 import com.sutdy.jpa.jpql.Employee;
 import com.sutdy.jpa.jpql.EmployeeSalaryData;
 
@@ -25,9 +26,11 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "select e from Employee e join fetch e.dept " +
-                "where (select count(e) from Employee  e where d.id = e.dept) >= 3";
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        String jpql = "select d from Department d where :employee member of d.employees";
+        TypedQuery<Department> query = em.createQuery(jpql, Department.class);
+        Employee findEmp = em.find(Employee.class, 6L);
+        query.setParameter("employee", findEmp);
+
         int pageNumber = 2;
         int pageSize = 5;
         int startNum = (pageNumber * pageSize) - pageSize;
