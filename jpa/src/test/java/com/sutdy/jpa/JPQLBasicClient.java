@@ -25,7 +25,8 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "select e, e.dept from Employee e order by e.id;
+        String jpql = "select e from Employee e join fetch e.dept " +
+                "where (select count(e) from Employee  e where d.id = e.dept) >= 3";
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
         int pageNumber = 2;
         int pageSize = 5;
