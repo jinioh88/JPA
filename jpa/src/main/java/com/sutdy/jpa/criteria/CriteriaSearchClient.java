@@ -68,6 +68,8 @@ public class CriteriaSearchClient {
             criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
         } else if (searchCondition.equals("MAILID")) {
             criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
+        } else if (searchCondition.equals("TITLE")) {
+            criteriaQuery.where(builder.equal(emp.get("title"), searchKeyword));
         }
 
         TypedQuery<com.sutdy.jpa.criteria.Employee> query = em.createQuery(criteriaQuery);
