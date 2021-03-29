@@ -1,11 +1,13 @@
 package com.sutdy.jpa.criteria;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@ToString(exclude = "dept")
 @Entity
 @Table(name = "S_EMP")
 public class Employee {

@@ -60,6 +60,7 @@ public class CriteriaSearchClient {
         Root<com.sutdy.jpa.criteria.Employee> emp  = criteriaQuery.from(com.sutdy.jpa.criteria.Employee.class);
 
         Join<Employee, Department> dept = emp.join("dept");
+        dept.fetch("employeeList");
 
         criteriaQuery.multiselect(emp.get("name"), emp.get("salary"), dept.get("name"));
 
