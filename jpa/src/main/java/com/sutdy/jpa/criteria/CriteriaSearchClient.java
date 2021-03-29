@@ -57,10 +57,14 @@ public class CriteriaSearchClient {
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
+        CriteriaQuery<Object[]> criteriaQuery1 = builder.createQuery(Object[].class);
+
         CriteriaQuery<com.sutdy.jpa.criteria.Employee> criteriaQuery =
                 builder.createQuery(com.sutdy.jpa.criteria.Employee.class);
 
-        Root<com.sutdy.jpa.criteria.Employee> emp  = criteriaQuery.from(com.sutdy.jpa.criteria.Employee.class);
+        Root<com.sutdy.jpa.criteria.Employee> emp  = criteriaQuery1.from(com.sutdy.jpa.criteria.Employee.class);
+
+        criteriaQuery1.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
 
         criteriaQuery.select(emp);
 
