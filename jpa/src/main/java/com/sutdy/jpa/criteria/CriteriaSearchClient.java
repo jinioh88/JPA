@@ -1,7 +1,6 @@
 package com.sutdy.jpa.criteria;
 
 import com.sutdy.jpa.biz.domain.Department;
-import com.sutdy.jpa.biz.domain.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,20 +29,20 @@ public class CriteriaSearchClient {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        Department department = new Department();
-        department.setName("개발부");
+        com.sutdy.jpa.criteria.Department devDept = new com.sutdy.jpa.criteria.Department();
+        devDept.setName("개발부");
+        em.persist(devDept);
 
-        com.sutdy.jpa.biz.domain.Employee employee1 = new com.sutdy.jpa.biz.domain.Employee();
-        employee1.setName("둘리");
-//        employee1.setDept(department);
+        com.sutdy.jpa.criteria.Department salseDept = new com.sutdy.jpa.criteria.Department();
+        salseDept.setName("영업부");
+        em.persist(salseDept);
 
-        com.sutdy.jpa.biz.domain.Employee employee2 = new Employee();
-        employee1.setName("또치");
-//        employee2.setDept(department);
-
-        em.persist(department);
-
-        System.out.println(department.getName() + "의 직원 수: " + department.getEmployees().size());
+        for (int i = 1; i <=3; i++) {
+            Employee employee = new Employee();
+            employee.setName("개발맨 "+ i);
+            employee.setMailId("Corona " + i);
+            employee.setDept(devDept);
+        }
 
         em.getTransaction().commit();
         em.close();
@@ -52,35 +51,19 @@ public class CriteriaSearchClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String searchCondition = "NAME";
-        String searchKeyword = "아르바이트";
+//        String searchCondition = "NAME";
+//        String searchKeyword = "아르바이트";
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        CriteriaQuery<Object[]> criteriaQuery1 = builder.createQuery(Object[].class);
+        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
 
-        CriteriaQuery<com.sutdy.jpa.criteria.Employee> criteriaQuery =
-                builder.createQuery(com.sutdy.jpa.criteria.Employee.class);
+        Root<com.sutdy.jpa.criteria.Employee> emp  = criteriaQuery.from(com.sutdy.jpa.criteria.Employee.class);
 
-        Root<com.sutdy.jpa.criteria.Employee> emp  = criteriaQuery1.from(com.sutdy.jpa.criteria.Employee.class);
+        criteriaQuery.multiselect(emp.get("name"), emp.get("salary"), emp.get("dept"), emp.get("name"));
 
-        criteriaQuery1.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
-
-        criteriaQuery.select(emp);
-
-        if (searchCondition.equals("NAME")) {
-            criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
-        } else if (searchCondition.equals("MAILID")) {
-            criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
-        } else if (searchCondition.equals("TITLE")) {
-            criteriaQuery.where(builder.equal(emp.get("title"), searchKeyword));
-        }
-
-        TypedQuery<com.sutdy.jpa.criteria.Employee> query = em.createQuery(criteriaQuery);
-        List<com.sutdy.jpa.criteria.Employee> resultList = query.getResultList();
-        for (com.sutdy.jpa.criteria.Employee result : resultList) {
-            System.out.println(result.toString());
-        }
+        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
+        List<Object[]> resultList = query.getResultList();
 
         em.close();
     }

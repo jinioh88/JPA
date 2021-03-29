@@ -23,11 +23,17 @@ public class Employee {
 
     private String title;
 
-    @Column(name = "DEPT_NAME")
-    private String deptName;
+    @ManyToOne
+    @JoinColumn(name = "DEPT_ID")
+    private Department dept;
 
     private Double salary;
 
     @Column(name = "COMMISSION_PCT")
     private Double commissionPct;
+
+    public void setDept(Department department) {
+        this.dept = department;
+        department.getEmployeeList().add(this);
+    }
 }
